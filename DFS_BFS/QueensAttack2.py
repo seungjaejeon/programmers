@@ -19,14 +19,18 @@ import sys
 #
 
 def queensAttack(n, k, r_q, c_q, obstacles):
-    pan = [[0 for i in range(n)]for j in range(n)]
+
     # Write your code here
     dx = [1,-1,0,0,1,1,-1,-1]
     dy = [0,0,1,-1,1,-1,1,-1]
     queue = []
+    obstacles_set = set((obstacle[0],obstacle[1])for obstacle in obstacles)
+    #set을 사용하는것이 시간초과 해결의 핵심이었다.
+    #  set의 시간 복잡도는 평균적으로 O(1)이며, 최악의 경우에도 O(N)입니다. 이는 해시 테이블을 사용하여 내부적으로 데이터를 저장하기 때문에, 
+    # 데이터 조회에 상수 시간이 소요됩니다.
+    # 반면에 리스트의 조회 시간 복잡도는 O(N)입니다. 리스트는 데이터를 인덱스에 따라 순차적으로 저장하기 때문에, 
+    # 특정 위치에 있는 데이터를 찾기 위해서는 전체 리스트를 탐색해야 합니다. 따라서 리스트의 길이에 비례하는 시간이 소요됩니다.
     count = 0
-    for i in range(k):
-        pan[obstacles[i][0]-1][obstacles[i][1]-1] = 2
     #right, left, up, under, cross up, cross down, reverse_cross up, reverse_cross down
     for i in range(8):
         queue.append([r_q,c_q])
@@ -36,12 +40,10 @@ def queensAttack(n, k, r_q, c_q, obstacles):
             ny = y+dy[i]
             if nx<1 or nx>n or ny<1 or ny>n:
                 break
-            if pan[nx-1][ny-1] == 2:
+            if (nx,ny) in obstacles_set:
                 break
             count += 1
-            pan[nx-1][ny-1] = 1
-
-    print(pan)
+            queue.append([nx,ny])
     return count
     
 
