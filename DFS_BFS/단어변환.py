@@ -18,11 +18,8 @@ def solution(begin, target, words):
     queue = deque([])
     queue.append([begin, 0])
     visited = [0 for _ in range(len(words))]
-    
     while queue:
-        
         word, count= queue.popleft()
-        print(queue, visited, word)
         if word == target:
             return count
         for i in range(len(words)):
