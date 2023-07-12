@@ -15,21 +15,31 @@ def solution(tickets):
     visited = [False for _ in range(len(tickets))]
     tickets = sorted(tickets, key=lambda x : x[1])
     def dfs(tickets,begin_index, visited):
-        answer.append(tickets[begin_index][1])
-        for i in range(len(tickets)):
-            if tickets[i][0]==tickets[begin_index][1] and not visited[i]:
-                visited[i] = True
-                
-                dfs(tickets, i, visited)
+        nonlocal result
+        if len(answer) == len(tickets)+1:
+            result.append(list(answer))
+            return
+        else:
+            for i in range(len(tickets)):
+                if tickets[i][0]==tickets[begin_index][1] and visited[i]==False:
+                    visited[i] = True
+                    answer.append(tickets[i][1])
+                    dfs(tickets, i, visited)
+                    visited[i] = False
+                    answer.pop()
+
     for i in range(len(tickets)):
         if tickets[i][0]=="ICN":
             begin_index = i
             break
     visited[begin_index] = True
+    answer.append(tickets[begin_index][1])
+    result = []
     dfs(tickets,begin_index, visited)
-    return answer
+    return result[0]
 
 tickets	=[["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL","SFO"]]
 print(solution(tickets))
 print(solution([["ICN", "BOO"], ["ICN", "COO"], ["COO", "DOO"], ["DOO", "COO"], ["BOO", "DOO"], ["DOO", "BOO"], ["BOO", "ICN"], ["COO", "BOO"]]))
+print(solution([["ICN", "BBB"],["ICN", "CCC"],["BBB", "CCC"],["CCC", "BBB"],["CCC", "ICN"]]))
 #["ICN", "BOO", "DOO", "BOO", "ICN", "COO", "DOO", "COO", "BOO"]
