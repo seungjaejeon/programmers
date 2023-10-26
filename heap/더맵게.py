@@ -41,3 +41,7 @@ def solution(scoville, K):
 scoville = [1, 2, 3, 9, 10, 12]
 K = 7
 print(solution(scoville,K))
+
+# 가장 작은 값과 두번째로 작은값을 구하기 위해서는 힙 구조가 제일좋다.
+# 이 점 기억하기
+# 
