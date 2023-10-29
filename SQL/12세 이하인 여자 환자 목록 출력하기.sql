@@ -1,0 +1,6 @@
+-- 코드를 입력하세요
+-- IFNULL 함수 IFNULL(a,b) : a가 null이면 b를 출력 null이 아니면 a를 그대로 출력
+SELECT PT_NAME, PT_NO, GEND_CD, AGE, IFNULL(TLNO, 'NONE') AS TLNO 
+FROM PATIENT
+WHERE AGE<=12 AND GEND_CD='W'
+ORDER BY AGE DESC, PT_NAME ASC
